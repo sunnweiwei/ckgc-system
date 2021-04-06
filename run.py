@@ -68,8 +68,8 @@ data_name = 'sp_data_day4'
 
 def translate_api(query):
     url = 'http://api.fanyi.baidu.com/api/trans/vip/translate'
-    appid = '20201024000597658'
-    key = 'CwwEUKXWjfDlbxZcCUl_'
+    appid = '*****************'
+    key = '****************'
     payload = {'q': query,
                'from': 'auto',
                'to': 'en',

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KGC</title>
+    <link rel="icon" href="data:image/ico;base64,aWNv">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/lq-score.css">
+    <link rel="stylesheet" href="/static/css/demo.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/lq-score.min.js"></script>
+</head>
+<body>
+<div class="knowledge" id="knowledge_full">
+    <p><input type="text" id="username" style="width:85px;">
+        <button onclick="open_ws()" id="button">Sign in!</button>
+        <button onclick="show_instruction()">Instruction</button>
+        <button onclick="do_alert()" id="alert_button">AlertOn</button>
+        <button onclick="match()" id="match" class="match">Match</button>
+    </p>
+    <div class="knowledge_box" id="knowledge_area">
+        <div id="instruction_in_knowledge" style="display: none">
+            <button onclick="show_description()">1.Description</button>
+            <button onclick="show_wizard()">2.Wizard</button>
+            <button onclick="show_apprentice()">3.Apprentice</button>
+            <div id="page1" style="display: none">
+                <h1>1. Knowledge Grounded Conversation, Chat with a Real Person</h1>
+                <h3>Description</h3>
+                <p>In this task, you will have a conversation with another person. The goal of this task is to go into
+                    depth about something that interests you or the other player, while keeping the conversation
+                    engaging and fun.</p>
+
+                <h3>Knowledge Grounded Conversation</h3>
+                <p>The two participants in the conversation, however, are not quite symmetric: one will play the role of
+                    a knowledgeable expert (which we refer to as the wizard) while the other is a curious learner (the
+                    apprentice).</p>
+                <p><b>Apprentice </b>At each stage of the conversation the apprentice talks to the wizard freely,
+                    playing the role of a curious learner, eager to chat. Their goal is to go into depth about a chosen
+                    topic that interests themselves or their partner, while keeping the conversation engaging and fun.
+                </p>
+                <p><b>Wizard </b>The wizard is given the following instructions: <i>“You have just met the other person,
+                    who seems quite curious, and you are eager to discuss a topic with them!”</i> Their goal is to
+                    inform their conversation partner about a topic that one of them will choose. Crucially, the wizard
+                    has access to an information retrieval system that shows them paragraphs from Wikipedia possibly
+                    relevant to the conversation, which are unobserved by the apprentice. Before each conversation turn
+                    the wizard can read these paragraphs and then potentially base their next reply on that observed
+                    knowledge. Note, the wizard is particularly instructed not to simply parrot this knowledge, but to
+                    use it to craft a relevant reply, and to present any relevant knowledge in a fun and engaging way,
+                    if possible.</p>
+
+                <h3>Conversation Flow</h3>
+                <p>The flow of the conversation thus takes place as follows</p>
+                <p>1. The apprentice is picked to choose the topic and speak first. The other player receives the topic
+                    information, and the conversation begins.</p>
+                <p>2. When the apprentice sends the wizard a message, the wizard is shown relevant knowledge, and
+                    chooses a relevant sentence in order to construct a response, or else chooses the no sentence used
+                    option.</p>
+                <p>3. The Wizard responds to the apprentice basing their response on their chosen sentence.</p>
+                <p>4. The conversation repeats until one of the conversation partners ends the chat (after a minimum of
+                    4 or 5 turns each).</p>
+
+                <h3>Sample Conversation</h3>
+                <p><b>Topic: </b>Ice cream</p>
+                <p><b>Wizard: </b>I just love ice cream. I love the types with fruits and flavours. Do you like ice
+                    cream?</p>
+                <p><b>Apprentice: </b>I love Ice cream as much as any one. I especially like Gelato, foreign ice cream!
+                </p>
+                <p><b>Wizard: </b>Me too. There are some strange combinations though, have you heard of bacon ice cream?
+                    where they add bacon and even egg custard to the freezing mixture!</p>
+                <p><b>Apprentice: </b>Surprisingly bacon ice cream doesn’t surprise me. That doesn’t sound appealing to
+                    me, but perhaps it could be delicious. . .</p>
+                <p><b>...</b></p>
+
+                <h3>Reference</h3>
+                <a href="https://arxiv.org/pdf/1811.01241.pdf">Wizard of Wikipedia: Knowledge-Powered Conversational
+                    agents</a>
+            </div>
+            <div id="page2" style="display: none">
+                <h1>2. Wizard Instruction</h1>
+                <p>You have just met the other person, who seems quite curious, and you are eager to discuss a topic
+                    with them!</p>
+                <p>You will try to inform your conversation partner about a topic that one of your partner will choose.
+                    After a topic is chosen, you will receive information about that topic that will be visible
+                    throughout the chat.</p>
+                <p>Additionally, after any message is sent in the chat, you will have access to a set of relevant
+                    information.</p>
+                <p>Try to use one of these sentences to answer your partner's questions, and in general have an engaging
+                    conversation.</p>
+
+                <h3>Some Guidelines:</h3>
+                <p>Please do not simply copy and paste the provided checked sentence - there's no fun in that!</p>
+                <p>Do not use “know-it-all” phrases such as "did you know" in your responses - e.g., the response "did
+                    you know that the Berlin Wall was demolished in 1989" will not be accepted — be fun and
+                    engaging!</p>
+
+                <h3>Conversation Outline</h3>
+                <p>Thus, a conversation will proceed as follows (from your perspective):</p>
+                <p>Your partner will pick an initial conversation topic from the list provided, at which point you will
+                    receive information about the topic, and then the conversation will begin.</p>
+                <p>When your partner sends you a message, you will look at the relevant information, and check a
+                    sentence you will use to construct a response. If you do not use any sentences, you must check the
+                    "No Sentence Used" option</p>
+                <p>You will respond to your partner, basing your response on the chosen sentence.</p>
+                <p>The conversation repeats until one of the conversation partners ends the chat (after a minimum of 4
+                    or 5 turns each).</p>
+            </div>
+            <div id="page3" style="display: none">
+                <h1>3. Apprentice Instruction</h1>
+                <p>You have just met the other person, who seems quite knowledgable, and you are curious to discuss a
+                    topic with them!</p>
+                <p>You will try to learn from your conversation partner about a topic that one of you will choose. Feel
+                    free to dive deep on specifics - your partner will have access to external information that will
+                    help them craft their response.</p>
+
+                <h3>Conversation Outline</h3>
+                <p>You or your partner will pick an initial conversation topic from the list provided, and open the
+                    conversation.</p>
+                <p>You will try to learn about the chosen topic</p>
+                <p>After you send a message, your partner will respond, continuing the conversation and hopefully
+                    providing more information about the topic.</p>
+            </div>
+        </div>
+        <div id="knowledge_box">
+
+        </div>
+    </div>
+</div>
+<!-- partial:index.partial.html -->
+<div class="container">
+    <div class="instruction">
+        <div id="show_sore" style="display: none">
+            <p>感谢您的参与，您可以给对方评分：</p>
+            <div class="myapp-score">
+                <div id="demo8">
+                </div>
+            </div>
+        </div>
+        <div id="show_instruction">
+            <p>在左侧输入框中输入用户名,点击Sign in!登录。点击Instruction以显示或隐藏指南。点击Match开始匹配对话！</p>
+            <p>如果您还没有阅读过Instruction,请仔细阅读左侧的Instruction。Instruction有三页,分别是1.介绍,2.Wizard指南,3.Apprentice指南</p>
+        </div>
+    </div>
+    <div class="imessage" id="message_box">
+
+    </div>
+    <input type="text" onkeydown="keyup_submit(event);" class="input_box" id="message" />
+    <input type="button" class="send" value="send" onclick="send_msg()">
+</div>
+<!-- partial -->
+<script type="application/javascript">
+    var ws = null;
+    var button = document.getElementById('button');
+    var match_button = document.getElementById('match');
+    var alert_button = document.getElementById('alert_button');
+    var instruction = document.getElementById('show_instruction');
+    var knowledge_full = document.getElementById('knowledge_full');
+    var knowledge_area = document.getElementById('knowledge_area');
+
+    var instruction_in_knowledge = document.getElementById('instruction_in_knowledge');
+    var page1 = document.getElementById('page1');
+    var page2 = document.getElementById('page2');
+    var page3 = document.getElementById('page3');
+
+    var user_name = "";
+    var to_user = "";
+    var conv_id = "";
+    var role = "";
+    var session_topic = ""
+    var dialogue = "";
+
+    instruction_in_knowledge.style.display = '';
+    page1.style.display = '';
+
+    var is_start = false;
+    var in_dialog = false;
+    var waiting = false;
+    var alert_on = true;
+
+    function randomString(len) {
+        len = len || 32;
+        var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+        var maxPos = $chars.length;
+        var pwd = '';
+        for (i = 0; i < len; i++) {
+            pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+        }
+        return pwd;
+    }
+    function is_alive() {
+        return ws != null && ws.readyState === ws.OPEN;
+    }
+
+    function safe_send(msg){
+        if (!is_alive()){
+            reconnect();
+        }
+        if (is_alive()){
+            ws.send(JSON.stringify(msg));
+            return true;
+        }
+        return false;
+    }
+
+    var heartCheck = {
+        timeout: 6000,//60ms
+        timeoutObj: null,
+        serverTimeoutObj: null,
+        reset: function(){
+            clearTimeout(this.timeoutObj);
+            clearTimeout(this.serverTimeoutObj);
+    　　　　 this.start();
+        },
+        start: function(){
+            var self = this;
+            this.timeoutObj = setTimeout(function(){
+                var msg = {
+                    state: "heart_beat",
+                };
+                safe_send(msg);
+            }, this.timeout)
+        },
+    }
+
+    function reconnect() {
+        if (reconnect.lockReconnect) return
+        if (! is_start) return
+        reconnect.lockReconnect = true;
+        setTimeout(function () {
+            console.log('reconnect');
+            ws = new WebSocket("ws://290261g40x.zicp.vip/ws/" + username);
+            reconnect.lockReconnect = false;
+        }, 1000);
+    }
+
+    function open_ws() {
+        document.getElementById("show_sore").style.display = "none";
+        if (is_start) {
+            if (in_dialog) {
+                match_button.innerHTML = "Match";
+                in_dialog = false;
+                knowledge_area.style.backgroundColor = '#e9ecef';
+                knowledge_full.style.backgroundColor = '#e9ecef';
+                dialogue = "";
+                var end_msg = {
+                    state: "dialog_end",
+                    conv_id: conv_id,
+                    from_user: username,
+                    to_user: to_user,
+                };
+                safe_send(end_msg);
+            }
+            button.innerHTML = "Sign in!";
+            match_button.innerHTML = "Match";
+            is_start = false;
+            in_dialog = false;
+            knowledge_area.style.backgroundColor = '#e9ecef';
+            knowledge_full.style.backgroundColor = '#e9ecef';
+            dialogue = "";
+            session_topic = "";
+            document.title = 'KGC';
+            var chat_content = document.getElementById("message_box");
+            chat_content.innerHTML = "";
+            ws.close();
+            return
+        }
+        is_start = true;
+        button.innerHTML = "Sign out!";
+        username = document.getElementById('username').value;
+        username = username + "." + randomString(5);
+        // ws = new WebSocket("ws://10.102.32.69:9527/ws/" + username);
+        // ws = new WebSocket("ws://101.76.251.190:9527/ws/" + username);
+        // ws = new WebSocket("ws://290261g40x.zicp.vip/ws/" + username);
+
+        // ws = new WebSocket("ws://290261g40x.zicp.vip/ws/" + username);
+        ws = new WebSocket("ws://290261g40x.zicp.vip:35665/ws/" + username);
+
+        ws.onopen = function () {
+            heartCheck.start();
+            alert("Success !");
+        };
+
+        ws.onmessage = function (eventMessage) {
+            heartCheck.reset();
+            document.getElementById("show_sore").style.display = "none";
+            var chat = JSON.parse(eventMessage.data);
+            console.log(chat);
+            var chat_content = document.getElementById("message_box");
+            var knowledge_box = document.getElementById("knowledge_box");
+            if ('heart_beat' in chat){
+                console.log('heart_beat');
+                return
+            }
+            if ("instruction" in chat) {
+                instruction.innerHTML = chat.instruction;
+            }
+            if ('knowledge' in chat) {
+                show_instruction(show='close');
+                knowledge_box.innerHTML = chat.knowledge;
+            }
+            if ("match" in chat) {
+                in_dialog = true;
+                knowledge_area.style.backgroundColor = '#e6eee0';
+                knowledge_full.style.backgroundColor = '#e6eee0';
+                show_instruction(show='close');
+                role = chat.role;
+                chat_content.innerHTML = "";
+                match_button.innerHTML = "END";
+                to_user = chat.match;
+                conv_id = chat.conv_id;
+                waiting = false;
+                dialogue = "";
+                session_topic = "";
+                document.title = 'KGC';
+                alert('匹配对手 ' + chat.match + ', conv_id=' + conv_id + ', 你的角色是' + role + ', 对话开始!');
+                return
+            }
+            if (!in_dialog) {
+                return
+            }
+            if ('dialog_end' in chat) {
+                match_button.innerHTML = "Match";
+                instruction.innerHTML = "";
+                in_dialog = false;
+                knowledge_area.style.backgroundColor = '#e9ecef';
+                knowledge_full.style.backgroundColor = '#e9ecef';
+                dialogue = "";
+                session_topic = "";
+                document.title = 'KGC';
+                var end_msg = {
+                    state: "dialog_end",
+                    conv_id: conv_id,
+                    from_user: username,
+                };
+                safe_send(end_msg);
+                // ws.send(JSON.stringify(end_msg));
+                alert('你的对手选择结束对话!')
+                document.getElementById("show_sore").style.display = "";
+                return
+            }
+            if ('topic' in chat) {
+                chat_content.innerHTML = chat_content.innerHTML + "\n" + "<p class=\"from-them\">" + "Chosen topic: " + chat.topic + "</p>";
+                dialogue = chat.topic;
+                session_topic = chat.topic;
+                document.title = chat.topic;
+                if(alert_on){
+                    alert('topic已经选择！')
+                }
+            }
+            if ('chat' in chat) {
+                if (chat.to_user === username) {
+                    dialogue = dialogue + '\n' + chat.chat;
+                    chat_content.innerHTML = chat_content.innerHTML + "\n" + "<p class=\"from-them\">" + chat.chat + "</p>";
+                    if(alert_on){
+                        alert('收到新消息！')
+                    }
+                }
+            }
+        };
+
+        ws.onclose = function () {
+            if(is_start){
+                reconnect();
+            }
+        };
+
+        ws.onerror = function () {
+            if(is_start){
+                reconnect();
+            }
+        };
+    }
+
+    function match() {
+        document.getElementById("show_sore").style.display = "none";
+        if (!is_start) {
+            in_dialog = false;
+            knowledge_area.style.backgroundColor = '#e9ecef';
+            knowledge_full.style.backgroundColor = '#e9ecef';
+            dialogue = "";
+            session_topic = "";
+            document.title = 'KGC';
+            alert("请先登录!")
+            return
+        }
+        if (in_dialog) {
+            match_button.innerHTML = "Match";
+            in_dialog = false;
+            knowledge_area.style.backgroundColor = '#e9ecef';
+            knowledge_full.style.backgroundColor = '#e9ecef';
+            dialogue = "";
+            session_topic = "";
+            document.title = 'KGC';
+            instruction.innerHTML = "";
+            var end_msg = {
+                state: "dialog_end",
+                conv_id: conv_id,
+                from_user: username,
+                to_user: to_user,
+            };
+            safe_send(end_msg);
+            // ws.send(JSON.stringify(end_msg));
+            alert('对话结束!');
+            document.getElementById("show_sore").style.display = "";
+            return
+        }
+        var send_str = {
+            state: "match_request",
+            from_user: username,
+            last_opponent: to_user
+        };
+        if (safe_send(send_str)){
+            match_button.innerHTML = "Waiting";
+            waiting = true;
+            alert('已发送匹配请求，请等待匹配!');
+        }
+    }
+
+    function topic_submit() {
+        var topic = "";
+        var items = document.getElementsByName("topic");
+        for (i = 0; i < items.length; i++) {
+            if (items[i].checked) {
+                topic = items[i].value;
+            }
+        }
+        var send_str = {
+            state: "topic",
+            conv_id: conv_id,
+            from_user: username,
+            to_user: to_user,
+            topic: topic
+        };
+        safe_send(send_str);
+        // ws.send(JSON.stringify(send_str));
+        var chat_content = document.getElementById("message_box");
+        chat_content.innerHTML = chat_content.innerHTML + "\n" + "<p class=\"from-me\">" + "Chosen topic: " + topic + "</p>";
+        dialogue = topic;
+        session_topic = topic;
+        document.title = topic;
+        var knowledge_box = document.getElementById("knowledge_box");
+        knowledge_box.innerHTML = "<p>You have chosen topic:" + topic + ". Dialogue start!</p><p>When the conversation reaches 4-5 turns, you can end the conversation by pressing the END button.</p>";
+    }
+    function keyup_submit(e){
+        var evt = window.event || e;
+        if (evt.keyCode == 13){
+            send_msg()
+        }
+    }
+
+    function send_msg() {
+        document.getElementById("show_sore").style.display = "none";
+        var chat_content = document.getElementById("message_box");
+        var msg = document.getElementById("message").value;
+        if (!is_start) {
+            alert("请先登录!")
+            chat_content.innerHTML = chat_content.innerHTML + "\n" + "<p class=\"from-me\">" + msg + "</p>";
+            document.getElementById("message").value = "";
+            return
+        }
+        if (!in_dialog) {
+            alert("请先匹配!")
+            chat_content.innerHTML = chat_content.innerHTML + "\n" + "<p class=\"from-me\">" + msg + "</p>";
+            document.getElementById("message").value = "";
+            return
+        }
+        // 发送消息
+        var knowledge = ""
+        if (role === 'Wizard') {
+            var items = document.getElementsByName("category");
+            for (i = 0; i < items.length; i++) {
+                if (items[i].checked) {
+                    knowledge = items[i].value;
+                }
+            }
+            if (knowledge === ""){
+                alert('你是Wizard, 请在左侧选择知识！');
+                return
+            }
+        }
+        console.log("选择为：" + knowledge);
+        dialogue = dialogue + '\n' + msg;
+        var send_str = {
+            state: "message",
+            conv_id: conv_id,
+            from_user: username,
+            to_user: to_user,
+            chat: msg,
+            dialogue: dialogue,
+            role: role,
+            topic: session_topic,
+            knowledge: knowledge
+        };
+        safe_send(send_str);
+        // ws.send(JSON.stringify(send_str));
+        document.getElementById("message").value = "";
+        chat_content.innerHTML = chat_content.innerHTML + "\n" + "<p class=\"from-me\">" + msg + "</p>";
+    }
+    function show_instruction(show='') {
+        if (show==='close'){
+            instruction_in_knowledge.style.display = 'none';
+            return
+        }
+        if (instruction_in_knowledge.style.display === 'none') {
+            instruction_in_knowledge.style.display = '';
+            if (role === 'Wizard') {
+                show_wizard();
+            }
+            if (role === 'Apprentice') {
+                show_apprentice();
+            }
+        } else {
+            instruction_in_knowledge.style.display = 'none';
+        }
+    }
+    function do_alert(){
+        if (alert_on){
+            alert_on = false;
+            alert_button.innerHTML = 'AlertOff';
+        }
+        else {
+            alert_on = true;
+            alert_button.innerHTML = 'AlertOn';
+            alert('开启新消息提醒！')
+        }
+    }
+
+    function show_description() {
+        page1.style.display = '';
+        page2.style.display = 'none';
+        page3.style.display = 'none';
+    }
+
+    function show_wizard() {
+        page1.style.display = 'none';
+        page2.style.display = '';
+        page3.style.display = 'none';
+    }
+
+    function show_apprentice() {
+        page1.style.display = 'none';
+        page2.style.display = 'none';
+        page3.style.display = '';
+    }
+
+    $(function () {
+        $("#demo8").lqScore({
+            isReScore: true,
+            callBack: function (score, ele) {
+                var send_str = {
+                    state: "score",
+                    conv_id: conv_id,
+                    from_user: username,
+                    to_user: to_user,
+                    score: score
+                };
+                safe_send(send_str);
+                // ws.send(JSON.stringify(send_str));
+            }
+        });
+    });
+</script>
+</body>
+</html>
+
+

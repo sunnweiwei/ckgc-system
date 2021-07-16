@@ -43,7 +43,7 @@ def read_pkl(filename):
 
 app = Flask(__name__, template_folder='./static/templates')
 
-solr = pysolr.Solr('http://10.102.32.111:8983/solr/wiki_passage/', always_commit=True, timeout=600)
+solr = pysolr.Solr('http://*******/wiki_passage/', always_commit=True, timeout=600)
 solr.ping()
 print('server start')
 user_dict = {}
@@ -67,7 +67,7 @@ data_name = 'sp_data_day4'
 
 
 def translate_api(query):
-    url = 'http://api.fanyi.baidu.com/api/trans/vip/translate'
+    url = 'http://*******/vip/translate'
     appid = '*****************'
     key = '****************'
     payload = {'q': query,

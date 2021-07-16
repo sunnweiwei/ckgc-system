@@ -1,5 +1,17 @@
 ## Annotation system of CKGC data set
 
+This is the test system for CKGC data collection in paper:
+
+*Weiwei Sun, Chuan Meng, Qi Meng, Zhaochun Ren, Pengjie Ren, Zhumin Chen, Maarten de Rijke. 2021. Conversation Powered by Cross-lingual Knowledge. In SIGIR'21.*
+
+Run the backend:
+
+```
+python run.py
+```
+
+### Introduction
+
 As far as we know, existing KGC (Knowledge Grounded Conversation) datasets only focus on grounding conversations in a monolingual knowledge corpus. Thus, we annotate a CKGC (Cross-lingual Knowledge Grounded Conversation) test dataset . Below, we provide our dataset construction details.
 
 With a largest number of articles in Wikipedia, English Wikipedia is applied as the unstructured knowledge base to ground the open-domain conversations in knowledge-scare languages. Following previous works, we consider a one-to-one conversation scenario in CKGC, and only one participant (i.e., the *wizard*) has access to an information retrieval system that shows the worker paragraphs from Wikipedia possibly relevant to the conversation, while the other is a curious learner (the *apprentice*)
